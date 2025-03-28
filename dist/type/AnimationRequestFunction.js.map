@@ -1,0 +1,1 @@
+{"version":3,"file":"AnimationRequestFunction.js","sourceRoot":"","sources":["../../src/type/AnimationRequestFunction.ts"],"names":[],"mappings":"","sourcesContent":["export type AnimationRequestFunction = (\n  callback: (time: number) => void\n) => number;\n"]}

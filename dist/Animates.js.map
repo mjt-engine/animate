@@ -1,0 +1,1 @@
+{"version":3,"file":"Animates.js","sourceRoot":"","sources":["../src/Animates.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,MAAM,EAAE,MAAM,UAAU,CAAC;AAElC,MAAM,CAAC,MAAM,QAAQ,GAAG;IACtB,MAAM;CACP,CAAC","sourcesContent":["import { create } from \"./create\";\n\nexport const Animates = {\n  create,\n};\n"]}

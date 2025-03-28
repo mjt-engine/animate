@@ -1,0 +1,1 @@
+{"version":3,"file":"Ticker.js","sourceRoot":"","sources":["../../src/type/Ticker.ts"],"names":[],"mappings":"","sourcesContent":["import { Tick } from \"./Tick\";\n\n\nexport type Ticker<R = unknown> = (tick: Tick) => Promise<R> | R;\n"]}

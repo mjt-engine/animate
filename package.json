@@ -1,0 +1,25 @@
+{
+  "name": "@mjt-engine/animate",
+  "version": "2025.3.28-1717",
+  "sideEffects": false,
+  "description": "animate module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "docs": "typedoc src/index.ts",
+    "build": "tsc -b",
+    "build-docs": "pnpm run build && pnpm run docs",
+    "changelog": "./scripts/changes.sh > CHANGELOG.md",
+    "changelog-version": "pnpm run changelog && ./scripts/version.sh",
+    "publish": "pnpm run build-docs && pnpm run changelog-version"
+  },
+  "keywords": [],
+  "author": "Matt Taylor (https://mjt.dev)",
+  "license": "MIT",
+  "devDependencies": {
+    "typedoc": "^0.27.9",
+    "typescript": "^5.8.2"
+  },
+  "dependencies": {}
+}
