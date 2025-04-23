@@ -1,6 +1,6 @@
 export const create = ({ ticksPerSecond = 60, ticker: tickable = [], running = true, signal, errorHandler = (error) => {
     throw error;
-}, request = requestAnimationFrame, }) => {
+}, request = requestAnimationFrame, clock = performance, }) => {
     // convert parameters
     const rateLimit = ticksPerSecond !== undefined;
     ticksPerSecond = rateLimit ? ticksPerSecond : 60; // TODO SHOULD CALC
@@ -8,8 +8,8 @@ export const create = ({ ticksPerSecond = 60, ticker: tickable = [], running = t
     const tickers = Array.isArray(tickable) ? tickable : [tickable];
     const abortController = new AbortController();
     const state = {
-        lastTickMs: Date.now(),
-        nextTickMs: Date.now(),
+        lastTickMs: clock.now(),
+        nextTickMs: clock.now(),
         tickCount: 0,
         frameCount: 0,
         costMs: 0,
@@ -20,6 +20,7 @@ export const create = ({ ticksPerSecond = 60, ticker: tickable = [], running = t
         abort: false,
         deltaMs: 0,
         lastDeltaMs: 0,
+        lastCostMs: 0,
         abortController,
         destroy: () => {
             state.abort = true;
@@ -27,7 +28,7 @@ export const create = ({ ticksPerSecond = 60, ticker: tickable = [], running = t
     };
     // animation loop
     const animate = async () => {
-        const curTimeMs = Date.now();
+        const curTimeMs = clock.now();
         state.costMs = 0;
         if (!rateLimit || curTimeMs >= state.nextTickMs) {
             state.lastDeltaMs = state.deltaMs;
@@ -50,7 +51,8 @@ export const create = ({ ticksPerSecond = 60, ticker: tickable = [], running = t
             catch (error) {
                 errorHandler(error);
             }
-            state.costMs = Date.now() - curTimeMs;
+            state.costMs = clock.now() - curTimeMs;
+            state.lastCostMs = state.costMs;
         }
         // adjust the next tick cost
         state.nextTickMs = state.nextTickMs - state.costMs;

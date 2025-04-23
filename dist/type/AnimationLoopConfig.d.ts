@@ -7,4 +7,7 @@ export type AnimationLoopConfig = {
     signal?: AbortSignal;
     errorHandler?: (error: unknown) => void;
     request?: AnimationRequestFunction;
+    clock?: {
+        now: () => number;
+    };
 };
