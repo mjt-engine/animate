@@ -1,4 +1,3 @@
-
 export type Tick = {
   lastTickMs: number;
   nextTickMs: number;
@@ -8,5 +7,6 @@ export type Tick = {
   deltaMs: number;
   lastDeltaMs: number;
   costMs: number;
+  lastCostMs: number;
   rateLimit: boolean;
 };

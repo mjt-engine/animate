@@ -12,6 +12,7 @@ export const create = ({
     throw error;
   },
   request = requestAnimationFrame,
+  clock = performance,
 }: AnimationLoopConfig): AnimateState => {
   // convert parameters
   const rateLimit = ticksPerSecond !== undefined;
@@ -21,8 +22,8 @@ export const create = ({
   const abortController = new AbortController();
 
   const state: AnimateState = {
-    lastTickMs: Date.now(),
-    nextTickMs: Date.now(),
+    lastTickMs: clock.now(),
+    nextTickMs: clock.now(),
     tickCount: 0,
     frameCount: 0,
     costMs: 0,
@@ -33,6 +34,7 @@ export const create = ({
     abort: false,
     deltaMs: 0,
     lastDeltaMs: 0,
+    lastCostMs: 0,
     abortController,
     destroy: () => {
       state.abort = true;
@@ -41,7 +43,7 @@ export const create = ({
 
   // animation loop
   const animate = async () => {
-    const curTimeMs = Date.now();
+    const curTimeMs = clock.now();
     state.costMs = 0;
     if (!rateLimit || curTimeMs >= state.nextTickMs) {
       state.lastDeltaMs = state.deltaMs;
@@ -64,7 +66,8 @@ export const create = ({
       } catch (error) {
         errorHandler(error);
       }
-      state.costMs = Date.now() - curTimeMs;
+      state.costMs = clock.now() - curTimeMs;
+      state.lastCostMs = state.costMs;
     }
 
     // adjust the next tick cost
