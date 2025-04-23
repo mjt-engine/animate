@@ -64,7 +64,7 @@ export const create = ({
       } catch (error) {
         errorHandler(error);
       }
-      state.costMs = (Date.now() - curTimeMs) * 1000;
+      state.costMs = Date.now() - curTimeMs;
     }
 
     // adjust the next tick cost
