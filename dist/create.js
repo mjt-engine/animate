@@ -50,7 +50,7 @@ export const create = ({ ticksPerSecond = 60, ticker: tickable = [], running = t
             catch (error) {
                 errorHandler(error);
             }
-            state.costMs = (Date.now() - curTimeMs) * 1000;
+            state.costMs = Date.now() - curTimeMs;
         }
         // adjust the next tick cost
         state.nextTickMs = state.nextTickMs - state.costMs;
